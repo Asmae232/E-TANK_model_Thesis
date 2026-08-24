@@ -1,12 +1,30 @@
 # E-TANK: Carbon-Tax Recycling, Energy Poverty, and Green Innovation
 
-E-TANK is a real, two-agent (TANK) New-Keynesian-style DSGE model of a small open
-economy featuring hand-to-mouth and Ricardian households, Stone-Geary preferences
-over energy consumption (with a subsistence floor), and a CES clean/dirty energy
-sector with endogenous green R&D. The model is calibrated to the euro area, with
-France used as a complementary calibration target. It is used to study how the
-*recycling* of carbon-tax revenue (green R&D subsidies vs. lump-sum transfers)
-shapes the distribution of the transition's costs between the two household types.
+E-TANK is a real, two-agent dynamic general-equilibrium (TANK) model of a
+small open economy. It features hand-to-mouth and Ricardian households,
+non-homothetic Stone-Geary preferences with a committed energy component,
+a nested CES production structure, clean and imported dirty energy, and
+endogenous clean-knowledge accumulation through green R&D.
 
-This repository contains the Dynare (.mod) file for the E-TANK model as used to
-produce the results reported in the thesis. 
+The carbon tax enters as an additive price wedge on imported dirty energy:
+
+    P_d,t = er_t P_oil,t + tau_t.
+
+Carbon-tax revenue is recycled within each period through two policy levers.
+The parameter theta determines the share allocated to clean R&D, with the
+remainder returned through household transfers. The parameter phi determines
+how that transfer envelope is allocated between hand-to-mouth and Ricardian
+households.
+
+The quarterly benchmark calibration is disciplined primarily by euro-area
+macroeconomic moments, while household heterogeneity is informed by French
+and broader European evidence. The model is used to examine how carbon-tax
+revenue recycling affects clean innovation, the macroeconomic cost of the
+energy transition, household welfare, and the distribution of transition
+costs.
+
+The included `e_tank_model.mod` file is the authoritative structural model
+source used for my thesis production runs. The reported results are
+obtained from deterministic perfect-foresight simulations using a numerical
+horizon of 1,600 quarters (400 years).
+
