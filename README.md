@@ -1,30 +1,42 @@
-# E-TANK: Carbon-Tax Recycling, Energy Poverty, and Green Innovation
+# E-TANK replication package
 
-E-TANK is a real, two-agent dynamic general-equilibrium (TANK) model of a
-small open economy. It features hand-to-mouth and Ricardian households,
-non-homothetic Stone-Geary preferences with a committed energy component,
-a nested CES production structure, clean and imported dirty energy, and
-endogenous clean-knowledge accumulation through green R&D.
+This folder contains the standalone Dynare implementation used for the quantitative analysis in my thesis:
 
-The carbon tax enters as an additive price wedge on imported dirty energy:
+**Innovate or Compensate? Carbon-Tax Revenue Recycling in the Energy Transition**.
 
-    P_d,t = er_t P_oil,t + tau_t.
+## Files
 
-Carbon-tax revenue is recycled within each period through two policy levers.
-The parameter theta determines the share allocated to clean R&D, with the
-remainder returned through household transfers. The parameter phi determines
-how that transfer envelope is allocated between hand-to-mouth and Ricardian
-households.
+- `e_tank_model_public.mod` — standalone E-TANK perfect-foresight model.
+- `README.md` — replication instructions.
 
-The quarterly benchmark calibration is disciplined primarily by euro-area
-macroeconomic moments, while household heterogeneity is informed by French
-and broader European evidence. The model is used to examine how carbon-tax
-revenue recycling affects clean innovation, the macroeconomic cost of the
-energy transition, household welfare, and the distribution of transition
-costs.
+## Requirements
 
-The included `e_tank_model.mod` file is the authoritative structural model
-source used for my thesis production runs. The reported results are
-obtained from deterministic perfect-foresight simulations using a numerical
-horizon of 1,600 quarters (400 years).
+- MATLAB
+- Dynare (the public file was validated with Dynare 6.5)
 
+## Horizons
+
+- Main economic reporting horizon: **30 years = 120 quarters**.
+- Perfect-foresight numerical solution horizon: **400 years = 1,600 quarters**.
+
+The 400-year horizon is used to minimize terminal-horizon effects and should not be interpreted as a 400-year economic forecast.
+
+## Reference outputs
+
+The run reproduces the final thesis results:
+
+| Outcome | Reference value |
+|---|---:|
+| Year-30 domestic emissions reduction | 36.940975% |
+| Year-30 net-output deviation | -8.614750% |
+| Year-30 clean knowledge, `A_c` | 10.482160 |
+| Year-30 clean-energy share | 40.497866% |
+| HtM lifetime S-CEV | 114.118122% |
+| Ricardian lifetime S-CEV | -18.629561% |
+| Aggregate lifetime money metric | 5.801250 |
+
+The initial HtM energy burden is 0.18 and the reference per-capita transfer ratio `T_H/T_R` is 16.
+
+## Model scope
+
+E-TANK is a two-agent environmental real general-equilibrium model with hand-to-mouth and Ricardian households, Stone-Geary energy demand, clean and dirty energy, endogenous clean-knowledge accumulation, nested-CES production, carbon-tax revenue recycling, a small-open-economy trade closure, and reduced-form climate damages.
