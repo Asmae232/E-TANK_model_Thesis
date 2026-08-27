@@ -815,8 +815,8 @@ if oo_.deterministic_simulation.status == 1
     WH_t1 = W_H_sim(1);   WR_t1 = W_R_sim(1);
     SCEV_H = 100*(((WH_t1+VL_H_ss)/VC_H_ss)^(1/(1-sigma))-1);
     SCEV_R = 100*(((WR_t1+VL_R_ss)/VC_R_ss)^(1/(1-sigma))-1);
-    % Convert type-specific S-CEVs to a common normalized money metric before
-    % population aggregation, exactly as in the final production postprocessor.
+    % Convert type-specific S-CEVs to resource-scaled welfare indices before
+    % population aggregation, as defined in the manuscript.
     money_scale_H = SS0.P_Z*SS0.Z_H/(SS0.C_H_n + SS0.P_e*SS0.C_H_e);
     money_scale_R = SS0.P_Z*SS0.Z_R/(SS0.C_R_n + SS0.P_e*SS0.C_R_e);
     money_metric_H = SCEV_H*money_scale_H;
@@ -826,7 +826,7 @@ if oo_.deterministic_simulation.status == 1
 
     fprintf('S-CEV HtM                  : %+.15g%%\n', SCEV_H);
     fprintf('S-CEV Ricardian            : %+.15g%%\n', SCEV_R);
-    fprintf('Aggregate money metric     : %+.15g\n', money_metric_aggregate);
+    fprintf('Aggregate welfare index     : %+.15g\n', money_metric_aggregate);
     fprintf('Initial burdens H/R/ratio  : %.15g / %.15g / %.15g\n', ...
         SS0.burden_H, SS0.burden_R, SS0.burden_ratio);
     fprintf('Initial transfer ratio H/R : %.15g\n', initial_transfer_ratio);
