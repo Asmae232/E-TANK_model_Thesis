@@ -187,7 +187,7 @@ sigma_Y     % (KL)/energy substitution elasticity in the outer CES
 % FINAL THESIS CALIBRATION
 % =========================================================================
 % The calibration and common initial steady state used in the thesis are
-% embedded directly below so that the benchmark experiment is fully
+% embedded directly below so that the quantitative experiments are fully
 % reproducible from this .mod file.
 
 fprintf('\n=== Using final thesis calibration ===\n');
