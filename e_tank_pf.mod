@@ -1,6 +1,6 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% E-TANK PERFECT-FORESIGHT MODEL
-%%%% Thesis : Innovate_or_compensate
+%%%% Thesis : Innovate or compensate : Carbon-Tax Revenue Recycling in the Energy Transition
 %%%% Surpervisors: Katheline SCHUBERT, Gauthier VERMANDEL
 %%%% Author: Asmae EL MOUHSSINE 
 %%%%
@@ -20,7 +20,7 @@
 %%%%
 %%%% Endogenous variables: 47
 %%%% Exogenous variables: tau, P_oil, e_ROW, theta_policy, phi_policy
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 close all; warning off;
 
@@ -184,126 +184,155 @@ sigma_Y     % (KL)/energy substitution elasticity in the outer CES
 %%
 %%%%%%%%%%%%% MATLAB SECTION: calibration %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % =========================================================================
-% FINAL BASELINE CALIBRATION
+% FINAL THESIS CALIBRATION
 % =========================================================================
-% The final thesis calibration and complete initial steady state are embedded
-% below so that the reference experiment is reproducible without an external
-% MAT file. An explicit calibration file may still be supplied for robustness
-% economies through ETANK_CALIBRATION_FILE. The legacy environment-variable
-% name is accepted as a backward-compatible alias for existing drivers.
-calibration_file = getenv('ETANK_CALIBRATION_FILE');
+% The calibration and common initial steady state used in the thesis are
+% embedded directly below so that the benchmark experiment is fully
+% reproducible from this .mod file.
 
-if ~isempty(calibration_file)
-    if ~exist(calibration_file, 'file')
-        error('Specified E-TANK calibration file does not exist: %s', calibration_file);
-    end
-    load(calibration_file, 'Calib', 'SS0');
-    fprintf('\n=== Loaded explicit E-TANK calibration: %s ===\n', calibration_file);
-else
-    fprintf('\n=== Using embedded final thesis calibration ===\n');
+fprintf('\n=== Using final thesis calibration ===\n');
 
-    % Final calibrated structural parameters and policy normalizations.
-    Calib = struct();
-    Calib.beta = 0.997;
-    Calib.sigma = 1.5;
-    Calib.psi = 2;
-    Calib.chi = 36.984023760240923;
-    Calib.lambda_htM = 0.20000000000000001;
-    Calib.omega = 0.012;
-    Calib.epsilon_E = 0.29999999999999999;
-    Calib.ebar = 0.048810491265711062;
-    Calib.alpha_y = 0.29999999999999999;
-    Calib.beta_y = 0.63;
-    Calib.alpha_c = 0.20000000000000001;
-    Calib.sigma_L = 1.3999999999999999;
-    Calib.omega_L = 0.81912080591756276;
-    Calib.delta = 0.025000000000000001;
-    Calib.phi_k = 4;
-    Calib.ass = 1.7559813768127772;
-    Calib.A = 1.7559813768127772;
-    Calib.alpha_E = 0.25;
-    Calib.rho_E = 1.8;
-    Calib.phi_mix = 75.410145028683701;
-    Calib.gz = 1.0029999999999999;
-    Calib.delta_c = 0.0050000000000000001;
-    Calib.eta_c = 7.7217487048955977;
-    Calib.phi_d = 1;
-    Calib.delta_clim = 0.0035000000000000001;
-    Calib.d0 = 0;
-    Calib.d1 = 0;
-    Calib.d2 = 1.6023073225444642e-08;
-    Calib.eta_X = 0.59999999999999998;
-    Calib.D_ex_ss = 0.13696323739659313;
-    Calib.gz_ss = 1.0029999999999999;
-    Calib.tau_ss = 0.050000000000000003;
-    Calib.P_oil_ss = 1;
-    Calib.A_c_ss = 1.0000000000000024;
-    Calib.alpha_KL = 0.32258064516129031;
-    Calib.m_Y = 0.99562965575655393;
-    Calib.sigma_Y = 0.5;
-    Calib.theta0 = 0.20000000000000001;
-    Calib.phi0 = 0.80000000000000004;
-    Calib.tau0 = 0.050000000000000003;
+% -------------------------------------------------------------------------
+% Final calibrated structural parameters and policy normalizations
+% -------------------------------------------------------------------------
+Calib = struct();
 
-    % Complete common initial steady state associated with Calib.
-    SS0 = struct();
-    SS0.P_Z = 1.0077629025699417;
-    SS0.Z_H = 0.41608728229586334;
-    SS0.Z_R = 0.65878666076902426;
-    SS0.C_H_n = 0.41204903040804042;
-    SS0.C_R_n = 0.65239293861091363;
-    SS0.C_H_e = 0.053075492317526181;
-    SS0.C_R_e = 0.055563223013719097;
-    SS0.L_H_u = 0.36352999479065101;
-    SS0.L_R_s = 0.32578416796900161;
-    SS0.Lambda_R = 1.8557712293223738;
-    SS0.I = 0.25871260563308529;
-    SS0.K = 9.2337276293386221;
-    SS0.q_K = 1.0122204127236445;
-    SS0.E = 0.096141334195180159;
-    SS0.E_c = 0.019225351297655697;
-    SS0.E_d = 0.13696323739659483;
-    SS0.E_y = 0.041075657320699649;
-    SS0.m = 0.14036869793013287;
-    SS0.P_e = 1.7041723630488299;
-    SS0.P_c = 1.0418538057136237;
-    SS0.P_d = 1.0499999999999923;
-    SS0.er = 0.99999999999999234;
-    SS0.Y_g = 1.1552788451976113;
-    SS0.Y_net = 1.0000000000000178;
-    SS0.r_k = 0.0329234317154002;
-    SS0.L_a = 0.20813103977352468;
-    SS0.L_s_y = 0.25997981265556414;
-    SS0.L_u_y = 0.06058491766584876;
-    SS0.L_u_c = 0.012121081292281432;
-    SS0.K_c = 0.12167629175955401;
-    SS0.L_R_c = 0.00064752171963715875;
-    SS0.w_s = 2.1151914019709288;
-    SS0.w_u = 1.3219946262318247;
-    SS0.W_a = 3.0269391854551766;
-    SS0.V_KL = 0.7043390879766579;
-    SS0.A_c = 1.0000000000000024;
-    SS0.gamma_agg = 1.0029999999999999;
-    SS0.e_em = 0.13696323739659483;
-    SS0.X = 2896.2752106847151;
-    SS0.Dam = 0.13440810921369639;
-    SS0.R_tau = 0.0068481618698297414;
-    SS0.T_H = 0.021914117983455175;
-    SS0.T_R = 0.001369632373965948;
-    SS0.C_n = 0.60432415697033903;
-    SS0.EX = 0.13696323739659377;
-    SS0.W_H = -822.05851411057142;
-    SS0.W_R = -643.4264481935943;
-    SS0.tau = 0.050000000000000003;
-    SS0.P_oil = 1;
-    SS0.e_ROW = 10;
-    SS0.theta_policy = 0.20000000000000001;
-    SS0.phi_policy = 0.80000000000000004;
-    SS0.burden_H = 0.1799999999999968;
-    SS0.burden_R = 0.12674549469868859;
-    SS0.burden_ratio = 1.4201688227886118;
-end
+Calib.beta = 0.997;
+Calib.sigma = 1.5;
+Calib.psi = 2;
+Calib.chi = 36.984023760240923;
 
+Calib.lambda_htM = 0.20000000000000001;
+Calib.omega = 0.012;
+Calib.epsilon_E = 0.29999999999999999;
+Calib.ebar = 0.048810491265711062;
+
+Calib.alpha_y = 0.29999999999999999;
+Calib.beta_y = 0.63;
+Calib.alpha_c = 0.20000000000000001;
+
+Calib.sigma_L = 1.3999999999999999;
+Calib.omega_L = 0.81912080591756276;
+
+Calib.delta = 0.025000000000000001;
+Calib.phi_k = 4;
+
+Calib.ass = 1.7559813768127772;
+Calib.A = 1.7559813768127772;
+
+Calib.alpha_E = 0.25;
+Calib.rho_E = 1.8;
+Calib.phi_mix = 75.410145028683701;
+
+Calib.gz = 1.0029999999999999;
+
+Calib.delta_c = 0.0050000000000000001;
+Calib.eta_c = 7.7217487048955977;
+
+Calib.phi_d = 1;
+
+Calib.delta_clim = 0.0035000000000000001;
+Calib.d0 = 0;
+Calib.d1 = 0;
+Calib.d2 = 1.6023073225444642e-08;
+Calib.eta_X = 0.59999999999999998;
+Calib.D_ex_ss = 0.13696323739659313;
+
+Calib.gz_ss = 1.0029999999999999;
+Calib.tau_ss = 0.050000000000000003;
+Calib.P_oil_ss = 1;
+Calib.A_c_ss = 1.0000000000000024;
+
+Calib.alpha_KL = 0.32258064516129031;
+Calib.m_Y = 0.99562965575655393;
+Calib.sigma_Y = 0.5;
+
+% Recycling rule used to construct the common initial steady state.
+% Alternative policy-grid values are applied from t = 1 onward.
+Calib.theta0 = 0.20000000000000001;
+Calib.phi0 = 0.80000000000000004;
+Calib.tau0 = 0.050000000000000003;
+
+% -------------------------------------------------------------------------
+% Common initial steady state associated with the final calibration
+% -------------------------------------------------------------------------
+SS0 = struct();
+
+SS0.P_Z = 1.0077629025699417;
+
+SS0.Z_H = 0.41608728229586334;
+SS0.Z_R = 0.65878666076902426;
+
+SS0.C_H_n = 0.41204903040804042;
+SS0.C_R_n = 0.65239293861091363;
+SS0.C_H_e = 0.053075492317526181;
+SS0.C_R_e = 0.055563223013719097;
+
+SS0.L_H_u = 0.36352999479065101;
+SS0.L_R_s = 0.32578416796900161;
+SS0.Lambda_R = 1.8557712293223738;
+
+SS0.I = 0.25871260563308529;
+SS0.K = 9.2337276293386221;
+SS0.q_K = 1.0122204127236445;
+
+SS0.E = 0.096141334195180159;
+SS0.E_c = 0.019225351297655697;
+SS0.E_d = 0.13696323739659483;
+SS0.E_y = 0.041075657320699649;
+SS0.m = 0.14036869793013287;
+
+SS0.P_e = 1.7041723630488299;
+SS0.P_c = 1.0418538057136237;
+SS0.P_d = 1.0499999999999923;
+SS0.er = 0.99999999999999234;
+
+SS0.Y_g = 1.1552788451976113;
+SS0.Y_net = 1.0000000000000178;
+
+SS0.r_k = 0.0329234317154002;
+
+SS0.L_a = 0.20813103977352468;
+SS0.L_s_y = 0.25997981265556414;
+SS0.L_u_y = 0.06058491766584876;
+SS0.L_u_c = 0.012121081292281432;
+SS0.L_R_c = 0.00064752171963715875;
+
+SS0.K_c = 0.12167629175955401;
+
+SS0.w_s = 2.1151914019709288;
+SS0.w_u = 1.3219946262318247;
+SS0.W_a = 3.0269391854551766;
+
+SS0.V_KL = 0.7043390879766579;
+
+SS0.A_c = 1.0000000000000024;
+SS0.gamma_agg = 1.0029999999999999;
+
+SS0.e_em = 0.13696323739659483;
+SS0.X = 2896.2752106847151;
+SS0.Dam = 0.13440810921369639;
+
+SS0.R_tau = 0.0068481618698297414;
+SS0.T_H = 0.021914117983455175;
+SS0.T_R = 0.001369632373965948;
+
+SS0.C_n = 0.60432415697033903;
+SS0.EX = 0.13696323739659377;
+
+SS0.W_H = -822.05851411057142;
+SS0.W_R = -643.4264481935943;
+
+SS0.tau = 0.050000000000000003;
+SS0.P_oil = 1;
+SS0.e_ROW = 10;
+
+SS0.theta_policy = 0.20000000000000001;
+SS0.phi_policy = 0.80000000000000004;
+
+SS0.burden_H = 0.1799999999999968;
+SS0.burden_R = 0.12674549469868859;
+SS0.burden_ratio = 1.4201688227886118;
 % Make every calibrated scalar available to the MATLAB and Dynare blocks.
 calibration_fields = fieldnames(Calib);
 for calibration_i = 1:numel(calibration_fields)
